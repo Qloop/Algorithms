@@ -32,14 +32,7 @@ public class SelectionSort {
                     minIndex = j;
                 }
             }
-            SelectionSort.swap(list, i, minIndex);
+            SortTestHelper.swap(list, i, minIndex);
         }
     }
-
-    public static void swap(int[] list, int srcIndex, int destIndex) {
-        int temp = list[srcIndex];
-        list[srcIndex] = list[destIndex];
-        list[destIndex] = temp;
-    }
-
 }

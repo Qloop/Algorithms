@@ -39,4 +39,10 @@ public class SortTestHelper {
             throw new IllegalArgumentException("范围参数不合法!");
         }
     }
+
+    public static void swap(int[] list, int srcIndex, int destIndex) {
+        int temp = list[srcIndex];
+        list[srcIndex] = list[destIndex];
+        list[destIndex] = temp;
+    }
 }
