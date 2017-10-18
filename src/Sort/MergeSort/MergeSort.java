@@ -14,13 +14,27 @@ import java.util.Arrays;
 public class MergeSort {
 
     public static void main(String[] args) {
-        int n = 10;
+        int n = 10000000;
         int[] arr = SortTestHelper.generateRandomArray(n, 0, n);
         SortTestHelper.testSort("归并排序", new CallTest() {
             @Override
             public void test() {
                 sort(arr);
-                SortTestHelper.printArray(arr);
+//                SortTestHelper.printArray(arr);
+            }
+        });
+        SortTestHelper.testSort("归并排序", new CallTest() {
+            @Override
+            public void test() {
+                sort(arr, 0, arr.length - 1, true);
+//                SortTestHelper.printArray(arr);
+            }
+        });
+        SortTestHelper.testSort("归并排序", new CallTest() {
+            @Override
+            public void test() {
+                sortBU(arr);
+//                SortTestHelper.printArray(arr);
             }
         });
     }
@@ -36,6 +50,27 @@ public class MergeSort {
         int mid = (l + r) / 2;
         sort(arr, l, mid);
         sort(arr, mid + 1, r);
+
+        //优化
+//        if (arr[mid] < arr[mid + 1]) {
+//            return;
+//        }
+        merge(arr, l, mid, r);
+    }
+
+    //优化
+    private static void sort(int[] arr, int l, int r, boolean advanced) {
+        if (l >= r) {
+            return;
+        }
+        int mid = (l + r) / 2;
+        sort(arr, l, mid);
+        sort(arr, mid + 1, r);
+
+//        优化  当数组已经有序的时候不再进行merge
+        if (arr[mid] < arr[mid + 1]) {
+            return;
+        }
         merge(arr, l, mid, r);
     }
 
@@ -64,4 +99,14 @@ public class MergeSort {
         }
     }
 
+
+    //自底向上的归并排序
+    private static void sortBU(int[] arr) {
+        int n = arr.length;
+        for (int sz = 1; sz <= n; sz += sz) {
+            for (int i = 0; i + sz < n; i += sz + sz) {
+                merge(arr, i, i + sz - 1, Math.min(i + sz + sz - 1, n - 1));
+            }
+        }
+    }
 }
