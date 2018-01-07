@@ -50,5 +50,5 @@ public class BubbleSort {
             n = lastSwapIndex;
         } while (lastSwapIndex > 0);
     }
-//123
+//123456
 }
